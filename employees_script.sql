@@ -36,14 +36,40 @@ SELECT emp_no, MIN(dept_no) AS dept_no,
 
 
 -- 4. Retrieve a list of all employees that have been hired in 2000.
+SELECT first_name, last_name, hire_date
+  FROM employees
+ WHERE YEAR(hire_date) = 2000;
 
 
 -- 5. Retrieve a list of all employees from the ‘titles’ table who are engineers.
 -- Retrieve a list of all employees from the ‘titles’ table who are senior engineers.
+SELECT emp_no, title
+  FROM titles
+ WHERE title = 'Engineer';
+ 
+ SELECT emp_no, title
+   FROM titles
+ WHERE title = 'Senior Engineer';
 
 
 -- 6. Create a procedure that asks you to insert an employee number and that will obtain an output containing the same number, as well as the number and name of the last department the employee has worked in.
 -- Finally, call the procedure for employee number 10010.
+DROP PROCEDURE IF EXISTS emp_department;
+
+DELIMITER $$
+
+CREATE PROCEDURE emp_department(IN p_emp_no INT)
+BEGIN
+	SELECT de.emp_no, de.dept_no, d.dept_name, MAX(de.from_date) AS start_date
+      FROM dept_emp AS de
+		   INNER JOIN departments AS d
+           ON de.dept_no = d.dept_no
+	 WHERE de.emp_no = p_emp_no;
+END$$
+
+DELIMITER ;
+
+CALL emp_department(10010);
 
 
 -- 7. How many contracts have been registered in the ‘salaries’ table with duration of more than one year and of value higher than or equal to $100,000?
@@ -51,8 +77,15 @@ SELECT emp_no, MIN(dept_no) AS dept_no,
 
 -- 8.Create a trigger that checks if the hire date of an employee is higher than the current date. If true, set the hire date to equal the current date. Format the output appropriately (YY-mm-dd).
 -- Extra challenge: You can try to declare a new variable called 'today' which stores today's data, and then use it in your trigger!
--- After creating the trigger, execute the code to see if it's working properly.
+-- After creating the trigger, execute the following code to see if it's working properly.
+/*
+			INSERT employees 
+			VALUES ('999904', '1970-01-31', 'John', 'Johnson', 'M', '2025-01-01');  
 
+			SELECT *
+			  FROM employees
+			 ORDER BY emp_no DESC;
+*/
 
 -- 9. Define a function that retrieves the largest contract salary value of an employee. Apply it to employee number 11356. In addition, what is the lowest contract salary value of the same employee? 
 -- You may want to create a new function to obtain the result.
