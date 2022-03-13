@@ -1,6 +1,6 @@
 # SQL Data Manipulation
 
-#### -- Project Status: Active
+#### -- Project Status: Completed
 
 ### Technologies
 * SQL
@@ -43,3 +43,16 @@
 	  - In addition, what is the lowest contract salary of the same employee?
 
 10. Based on the previous exercise, you can now try to create a third function that also accepts a second parameter. Let this parameter be a character sequence. Evaluate if its value is 'min' or 'max' and based on that retrieve either the lowest or the highest salary, respectively (using the same logic and code structure from Exercise 9). If the inserted value is any string value different from 'min' or 'max', let the function return the difference between the highest and the lowest salary of that employee.
+
+## Appendix
+### List of Tables in the Employees DB
+
+* A schema is also available as `employees.sql` [here](https://github.com/datacharmer/test_db).
+
+```sql
+'departments'
+'dept_emp'
+'dept_manager'
+'employees'
+'salaries'
+'titles'
